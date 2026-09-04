@@ -1,0 +1,4 @@
+# Серверы для отчёта report_disks.ps1
+msk-app20
+msk-app21
+msk-nas01

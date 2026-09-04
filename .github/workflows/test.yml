@@ -1,0 +1,163 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit-tests:
+    name: Unit tests — ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+      - name: Run pytest (no network)
+        env:
+          PYTHONIOENCODING: utf-8
+          PYTHONUTF8: "1"
+          AI4TAI_SITE_MODE: mock
+          AI4TAI_EMBEDDER: hash
+        run: pytest tests/ -v --tb=short
+
+  install-smoke:
+    name: Install smoke — ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    needs: unit-tests
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Write placeholder .env (no real key needed for setup + doctor)
+        shell: bash
+        run: |
+          cat > .env <<'ENV'
+          YANDEX_CLOUD_API_KEY=placeholder-key-for-install-smoke-only
+          YANDEX_CLOUD_FOLDER=b1placeholder
+          YANDEX_CLOUD_MODEL=qwen3.6-35b-a3b/latest
+          AI4TAI_SITE_MODE=mock
+          ENV
+
+      - name: setup (Linux)
+        if: runner.os == 'Linux'
+        run: ./setup.sh
+
+      - name: setup.bat (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: call setup.bat
+
+      - name: doctor (Linux)
+        if: runner.os == 'Linux'
+        run: ./bin/ai4tai doctor
+
+      - name: doctor (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: call bin\ai4tai.bat doctor
+
+      - name: RAG index + search (hash embedder, no network)
+        shell: bash
+        env:
+          AI4TAI_EMBEDDER: hash
+        run: |
+          if [ "$RUNNER_OS" = "Windows" ]; then PY=.venv/Scripts/python.exe; else PY=.venv/bin/python; fi
+          "$PY" src/rag_index.py index data/docs --db .rag/index.sqlite --embedder hash
+          "$PY" src/rag_index.py search "срок носки каски" --db .rag/index.sqlite -k 2
+
+  e2e:
+    name: E2E Task A — ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    needs: unit-tests
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check secrets
+        id: chk
+        shell: bash
+        env:
+          KEY: ${{ secrets.YANDEX_CLOUD_API_KEY }}
+          FOLDER: ${{ secrets.YANDEX_CLOUD_FOLDER }}
+        run: |
+          if [ -n "$KEY" ] && [ -n "$FOLDER" ]; then
+            echo "has=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::YANDEX_CLOUD_API_KEY / YANDEX_CLOUD_FOLDER не заданы — e2e пропущен"
+          fi
+
+      - name: Write .env from secrets
+        if: steps.chk.outputs.has == 'true'
+        shell: bash
+        env:
+          KEY: ${{ secrets.YANDEX_CLOUD_API_KEY }}
+          FOLDER: ${{ secrets.YANDEX_CLOUD_FOLDER }}
+        run: |
+          cat > .env <<ENV
+          YANDEX_CLOUD_API_KEY=$KEY
+          YANDEX_CLOUD_FOLDER=$FOLDER
+          YANDEX_CLOUD_MODEL=qwen3.6-35b-a3b/latest
+          AI4TAI_SITE_MODE=mock
+          ENV
+
+      - name: setup (Linux)
+        if: steps.chk.outputs.has == 'true' && runner.os == 'Linux'
+        run: ./setup.sh
+
+      - name: setup.bat (Windows)
+        if: steps.chk.outputs.has == 'true' && runner.os == 'Windows'
+        shell: cmd
+        run: call setup.bat
+
+      - name: ai4tai run — Task A (Linux)
+        if: steps.chk.outputs.has == 'true' && runner.os == 'Linux'
+        env:
+          AI4TAI_QUIET: "1"
+          AI4TAI_NOCOLOR: "1"
+        run: |
+          mkdir -p /tmp/taskA && cd /tmp/taskA
+          timeout 900 "$GITHUB_WORKSPACE/bin/ai4tai" run "Create a file hello.py that prints the first 10 Fibonacci numbers (0 1 1 2 3 5 8 13 21 34), one per line. After creating it, run it to verify it works."
+          python3 "$GITHUB_WORKSPACE/.github/scripts/check_fib.py" hello.py
+
+      - name: ai4tai run — Task A (Windows)
+        if: steps.chk.outputs.has == 'true' && runner.os == 'Windows'
+        shell: cmd
+        env:
+          AI4TAI_QUIET: "1"
+          AI4TAI_NOCOLOR: "1"
+          PYTHONIOENCODING: utf-8
+          PYTHONUTF8: "1"
+        run: |
+          mkdir C:\taskA 2>nul
+          cd /d C:\taskA
+          call "%GITHUB_WORKSPACE%\bin\ai4tai.bat" run "Create a file hello.py that prints the first 10 Fibonacci numbers (0 1 1 2 3 5 8 13 21 34), one per line. After creating it, run it to verify it works."
+          "%GITHUB_WORKSPACE%\.venv\Scripts\python.exe" "%GITHUB_WORKSPACE%\.github\scripts\check_fib.py" hello.py

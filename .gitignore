@@ -1,0 +1,19 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Goose
+.tools/
+.config/goose/
+
+# Данные, создаваемые локально
+data/demo.sqlite
+.rag/
+
+# Редакторы / ОС
+.vscode/
+.idea/
+*.swp
+.DS_Store

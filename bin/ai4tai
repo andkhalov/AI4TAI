@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# AI4TAI entrypoint — Linux / macOS shim. Forwards to bin/ai4tai.py.
+if command -v readlink >/dev/null 2>&1 && readlink -f "${BASH_SOURCE[0]}" >/dev/null 2>&1; then
+    SELF="$(readlink -f "${BASH_SOURCE[0]}")"
+elif command -v greadlink >/dev/null 2>&1; then
+    SELF="$(greadlink -f "${BASH_SOURCE[0]}")"
+else
+    SELF="${BASH_SOURCE[0]}"
+    while [ -L "$SELF" ]; do
+        TARGET="$(readlink "$SELF")"
+        [[ "$TARGET" = /* ]] || TARGET="$(dirname "$SELF")/$TARGET"
+        SELF="$TARGET"
+    done
+fi
+REPO="$(cd "$(dirname "$SELF")/.." && pwd)"
+PY="$REPO/.venv/bin/python"
+[ -x "$PY" ] || PY="$(command -v python3 || command -v python)"
+exec "$PY" "$REPO/bin/ai4tai.py" "$@"
