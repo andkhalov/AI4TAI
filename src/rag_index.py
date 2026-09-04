@@ -37,6 +37,14 @@ import sys
 import time
 from pathlib import Path
 
+# Windows: консоль по умолчанию cp1252/cp866 — принудительно UTF-8 для кириллицы.
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+        sys.stderr.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+    except Exception:
+        pass
+
 TEXT_SUFFIXES = {".md", ".txt", ".csv", ".json", ".log", ".ps1", ".py", ".sql", ".bsl", ".yaml", ".yml", ".ini"}
 PDF_SUFFIXES = {".pdf"}
 DEFAULT_CHUNK_CHARS = 900

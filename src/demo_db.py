@@ -19,6 +19,14 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
+# Windows: консоль по умолчанию cp1252/cp866 — принудительно UTF-8 для кириллицы.
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+        sys.stderr.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+    except Exception:
+        pass
+
 REPO = Path(__file__).resolve().parent.parent
 CATALOG = REPO / "data" / "catalog_mock.json"
 DEFAULT_DB = REPO / "data" / "demo.sqlite"

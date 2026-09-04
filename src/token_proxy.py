@@ -23,6 +23,14 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 
+# Windows: консоль по умолчанию cp1252/cp866 — принудительно UTF-8 для кириллицы.
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+        sys.stderr.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+    except Exception:
+        pass
+
 UPSTREAM = os.environ.get("AI4TAI_UPSTREAM", "https://llm.api.cloud.yandex.net")
 DAILY_LIMIT = int(os.environ.get("AI4TAI_DAILY_TOKEN_LIMIT", "3000000"))
 BUDGET_FILE = Path.home() / ".ai4tai_budget.json"
