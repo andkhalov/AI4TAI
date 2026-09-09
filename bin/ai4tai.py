@@ -81,6 +81,7 @@ MIN_TOOLS = 10
 
 # Короткие имена моделей → slug Yandex AI Studio
 MODEL_ALIASES = {
+    "junior": "gpt-oss-20b/latest",       # домашний режим: самая дешёвая модель
     "qwen": "qwen3.6-35b-a3b/latest",
     "qwen35": "qwen3.6-35b-a3b/latest",
     "qwen235": "qwen3-235b-a22b-fp8/latest",

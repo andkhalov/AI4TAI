@@ -78,7 +78,7 @@ YANDEX_CLOUD_MODEL=qwen3.6-35b-a3b/latest
 | `ai4tai` | Интерактивная сессия, режим `smart_approve` |
 | `ai4tai run "<промпт>"` | Одна задача без подтверждений, выход |
 | `ai4tai doctor` | Проверка: ключ, Goose, venv, база, MCP-сервер, бюджет |
-| `ai4tai -m <slug\|alias>` | Модель: `qwen` (по умолчанию), `qwen235`, `deepseek`, `gptoss` или полный slug |
+| `ai4tai -m <slug\|alias>` | Модель: `qwen` (по умолчанию), `junior` (домашний режим, дешёвая gpt-oss-20b), `qwen235`, `deepseek`, `gptoss` или полный slug |
 | `ai4tai --mode approve` | Каждый вызов инструмента требует подтверждения |
 | `ai4tai --site mock` | Сайт только из локальной копии |
 
