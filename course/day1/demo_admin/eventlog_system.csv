@@ -1,9 +1,0 @@
-TimeCreated,ComputerName,Id,Level,ProviderName,Message
-2026-09-01T02:14:07,msk-app20,7031,Error,Service Control Manager,"Служба ""SQL Server Agent (MSSQLSERVER)"" неожиданно завершила работу. Это произошло 3 раз(а)."
-2026-09-01T02:14:09,msk-app20,17187,Error,MSSQLSERVER,"SQL Server не готов принимать новые запросы клиентов. Это временное состояние."
-2026-09-01T03:02:41,msk-app20,3201,Error,MSSQLSERVER,"Не удается открыть устройство резервного копирования ""E:\Backup\UT_full.bak"". Ошибка операционной системы 112 (Недостаточно места на диске)."
-2026-09-01T03:02:44,msk-app20,18210,Error,MSSQLSERVER,"BackupDiskFile::CreateMedia: сбой при создании устройства резервного копирования."
-2026-09-01T07:45:12,msk-app20,1074,Information,User32,"Процесс C:\Windows\System32\RuntimeBroker.exe инициировал перезапуск компьютера от имени SYSTEM."
-2026-09-01T08:11:55,spb-app05,2013,Warning,srv,"На диске C: заканчивается свободное место. Это может привести к сбоям."
-2026-09-01T09:30:02,msk-app20,36871,Error,Schannel,"Произошла критическая ошибка при создании учетных данных TLS. Внутреннее состояние ошибки: 10013."
-2026-09-01T09:41:18,ekb-ts02,4625,Warning,Security-Auditing,"Учетной записи не удалось выполнить вход. Имя: svc_backup. Причина: неверный пароль. Попытка 6 из 7."

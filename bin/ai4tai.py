@@ -271,10 +271,10 @@ def doctor() -> None:
     else:
         print(f"python venv: НЕ НАЙДЕН ({VENV_PY})")
 
-    db = REPO / "data" / "demo.sqlite"
+    db = REPO / ".data" / "demo.sqlite"
     print(f"учебная база: {'OK' if db.exists() else 'нет (создастся при первом запросе)'} ({db})")
     rag = REPO / ".rag" / "index.sqlite"
-    print(f"RAG-индекс: {'OK' if rag.exists() else 'нет (python src/rag_index.py index data/docs)'}")
+    print(f"RAG-индекс: {'OK' if rag.exists() else 'нет (python src/rag_index.py index <папка с документами>)'}")
 
     probe_env = {k: v for k, v in env.items()}
     tools, err = probe_mcp(env_vars=probe_env, timeout=12)

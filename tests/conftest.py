@@ -108,10 +108,10 @@ def demo_db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, m) -> Path:
 
 @pytest.fixture
 def rag_db(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, m) -> Path:
-    """RAG-индекс по data/docs с hash-эмбеддером во временной папке."""
+    """RAG-индекс по tests/fixtures/docs с hash-эмбеддером во временной папке."""
     import rag_index
     p = tmp_path / "index.sqlite"
-    rag_index.build_index(REPO_ROOT / "data" / "docs", p, rag_index.HashEmbedder())
+    rag_index.build_index(Path(__file__).resolve().parent / "fixtures" / "docs", p, rag_index.HashEmbedder())
     monkeypatch.setattr(m, "RAG_DB", p)
     return p
 

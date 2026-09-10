@@ -33,8 +33,8 @@
   TARU_BASE_URL        https://technoavia.ru/api   базовый URL API сайта
   TARU_API             токен API сайта (Bearer)
   AI4TAI_SITE_MODE     auto | live | mock          (auto: live, при сбое mock)
-  AI4TAI_CATALOG_MOCK  data/catalog_mock.json      локальная копия каталога
-  AI4TAI_DB_PATH       data/demo.sqlite            учебная база
+  AI4TAI_CATALOG_MOCK  src/fixtures/catalog_mock.json  локальная копия каталога
+  AI4TAI_DB_PATH       .data/demo.sqlite               учебная база
   AI4TAI_DB_WRITE=1    разрешить запись в базу
   AI4TAI_RAG_DB        .rag/index.sqlite           индекс RAG
   AI4TAI_SKILLS_DIR    skills/                     каталог skills
@@ -79,8 +79,8 @@ mcp = FastMCP("ai4tai")
 TARU_BASE_URL = os.environ.get("TARU_BASE_URL", "https://technoavia.ru/api").rstrip("/")
 TARU_API = os.environ.get("TARU_API", "")
 SITE_MODE = os.environ.get("AI4TAI_SITE_MODE", "auto").lower()
-CATALOG_MOCK = Path(os.environ.get("AI4TAI_CATALOG_MOCK", REPO / "data" / "catalog_mock.json"))
-DB_PATH = Path(os.environ.get("AI4TAI_DB_PATH", REPO / "data" / "demo.sqlite"))
+CATALOG_MOCK = Path(os.environ.get("AI4TAI_CATALOG_MOCK", HERE / "fixtures" / "catalog_mock.json"))
+DB_PATH = Path(os.environ.get("AI4TAI_DB_PATH", REPO / ".data" / "demo.sqlite"))
 DB_WRITE = os.environ.get("AI4TAI_DB_WRITE") == "1"
 RAG_DB = Path(os.environ.get("AI4TAI_RAG_DB", REPO / ".rag" / "index.sqlite"))
 WEB_DISABLED = os.environ.get("AI4TAI_WEB_DISABLED") == "1"
@@ -546,7 +546,7 @@ def _fmt_table(cols: list[str], rows: list[tuple]) -> str:
 
 @mcp.tool()
 def sqlite_schema(db_path: str = "") -> str:
-    """Схема SQLite-базы: таблицы, колонки, число строк. По умолчанию — учебная база data/demo.sqlite."""
+    """Схема SQLite-базы: таблицы, колонки, число строк. По умолчанию — учебная база .data/demo.sqlite."""
     try:
         p = _resolve_db(db_path)
         if not p.exists():

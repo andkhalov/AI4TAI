@@ -2,7 +2,7 @@
 
 Используется MCP-сервером (rag_search / rag_status) и как CLI:
 
-    python src/rag_index.py index data/docs --db .rag/index.sqlite
+    python src/rag_index.py index <папка с документами> --db .rag/index.sqlite
     python src/rag_index.py search "регламент выдачи СИЗ" --db .rag/index.sqlite
     python src/rag_index.py stats --db .rag/index.sqlite
 

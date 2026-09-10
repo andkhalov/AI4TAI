@@ -9,7 +9,7 @@ __pycache__/
 .config/goose/
 
 # Данные, создаваемые локально
-data/demo.sqlite
+.data/
 .rag/
 
 # Редакторы / ОС

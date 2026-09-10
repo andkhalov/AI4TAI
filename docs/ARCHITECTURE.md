@@ -62,8 +62,8 @@ Goose recipe: `extensions` (builtin `developer` + stdio `ai4tai`) и
 | Группа | Инструменты | Зависимости |
 |---|---|---|
 | Служебные | `token_budget`, `load_artifact`, `list_skills`, `load_skill` | файлы |
-| Сайт | `site_status`, `site_search`, `site_product`, `site_categories` | `requests` → `TARU_BASE_URL`; fallback `data/catalog_mock.json` |
-| База | `sqlite_schema`, `sqlite_query` | `sqlite3`; `demo_db.build()` при отсутствии базы |
+| Сайт | `site_status`, `site_search`, `site_product`, `site_categories` | `requests` → `TARU_BASE_URL`; fallback `src/fixtures/catalog_mock.json` |
+| База | `sqlite_schema`, `sqlite_query` | `sqlite3`; `demo_db.build()` при отсутствии `.data/demo.sqlite` |
 | RAG | `rag_status`, `rag_search` | `rag_index` |
 | Веб | `web_search`, `web_fetch` | DuckDuckGo HTML / Brave API |
 | PDF | `pdf_info`, `pdf_read`, `pdf_search` | `pypdf` |
@@ -94,8 +94,12 @@ EXPLAIN; остальные операторы отклоняются без `AI
 
 ### src/demo_db.py
 
-Детерминированная генерация (seed 20260908): 35 позиций номенклатуры из
-каталога, 4 склада, остатки, 8 клиентов, ~60 заказов за 60 дней.
+Детерминированная генерация (seed 20260908) из `src/fixtures/catalog_mock.json`:
+35 позиций номенклатуры, 4 склада, остатки, 8 клиентов, ~60 заказов за
+60 дней. Результат — `.data/demo.sqlite` (в `.gitignore`).
+
+Учебные документы для RAG, раздатка и выгрузки для практики в этот
+репозиторий не входят: они выдаются слушателям отдельным комплектом.
 
 ### src/token_proxy.py
 

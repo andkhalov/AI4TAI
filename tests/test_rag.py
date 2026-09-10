@@ -121,14 +121,14 @@ def test_rag_search_missing(m, tmp_path, monkeypatch):
     assert out.startswith("ERROR")
 
 
-def test_rag_status_and_search_on_course_docs(m, rag_db):
+def test_rag_status_and_search_on_fixtures(m, rag_db):
     st = m.rag_status()
-    assert "Документов: 6" in st and "hash" in st
-    out = m.rag_search("нет рукопожатия wireguard", top_k=2)
-    assert "instrukciya_wireguard.md" in out
+    assert "Документов: 3" in st and "hash" in st
+    out = m.rag_search("рукопожатие есть, сервер недоступен", top_k=2)
+    assert "vpn.md" in out
     assert "строки" in out
 
 
-def test_rag_search_siz_reglament(m, rag_db):
+def test_rag_search_finds_helmet_doc(m, rag_db):
     out = m.rag_search("срок носки каски", top_k=3)
-    assert "reglament_vydachi_siz.md" in out
+    assert "caskas.md" in out

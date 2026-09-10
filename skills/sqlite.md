@@ -17,7 +17,7 @@ combines_with: 1c-query, python, markdown
 4. Проверка: контрольная сумма или число строк вторым запросом; сверка
    одного значения вручную.
 
-## Учебная база data/demo.sqlite
+## Учебная база .data/demo.sqlite
 
 ```
 nomenclature(sku PK, name, category, unit, price, is_active)

@@ -1,13 +1,13 @@
 """Учебная SQLite-база «номенклатура / склады / остатки / заказы».
 
 Структура повторяет упрощённую учётную систему: справочник номенклатуры
-(артикулы совпадают с локальной копией каталога сайта, data/catalog_mock.json),
+(артикулы совпадают с локальной копией каталога, src/fixtures/catalog_mock.json),
 склады, остатки по складам, заказы покупателей и их строки.
 
 Данные генерируются детерминированно (фиксированный seed), поэтому у всех
 слушателей одинаковая база и одинаковые ответы на запросы.
 
-    python src/demo_db.py                 # → data/demo.sqlite
+    python src/demo_db.py                 # → .data/demo.sqlite
     python src/demo_db.py path/to.sqlite
 """
 from __future__ import annotations
@@ -28,8 +28,8 @@ if sys.platform == "win32":
         pass
 
 REPO = Path(__file__).resolve().parent.parent
-CATALOG = REPO / "data" / "catalog_mock.json"
-DEFAULT_DB = REPO / "data" / "demo.sqlite"
+CATALOG = REPO / "src" / "fixtures" / "catalog_mock.json"
+DEFAULT_DB = REPO / ".data" / "demo.sqlite"
 
 SCHEMA = """
 CREATE TABLE nomenclature (

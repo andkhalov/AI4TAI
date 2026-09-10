@@ -127,7 +127,7 @@ def main() -> int:
     model = ask_choice("Модель по умолчанию", MODELS, default=0)
     print()
     print("  Токен API сайта technoavia.ru — необязательно. Без него агент")
-    print("  работает с локальной копией каталога (data/catalog_mock.json).")
+    print("  работает с локальной копией каталога (src/fixtures/catalog_mock.json).")
     taru_api = ask("TARU_API (Enter — пропустить)", default="")
     taru_user = ask("TARU_USER_ID (Enter — пропустить)", default="") if taru_api else ""
     write_env(api_key, folder, model, taru_api, taru_user)

@@ -5,7 +5,7 @@
   2. Создание .venv и pip install -r requirements.txt
   3. Скачивание Goose CLI в .tools/
   4. Запуск cli/wizard.py (если .env не существует)
-  5. Сборка учебной базы data/demo.sqlite
+  5. Сборка учебной базы .data/demo.sqlite
   6. Symlink ~/.local/bin/ai4tai (Linux/macOS)
   7. Проверка: bin/ai4tai doctor
 
@@ -194,7 +194,7 @@ def run_wizard(py: Path) -> None:
 
 
 def build_demo_db(py: Path) -> None:
-    say("Собираю учебную базу data/demo.sqlite ...")
+    say("Собираю учебную базу .data/demo.sqlite ...")
     subprocess.check_call([str(py), str(REPO / "src" / "demo_db.py")])
 
 

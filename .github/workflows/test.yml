@@ -84,7 +84,7 @@ jobs:
           AI4TAI_EMBEDDER: hash
         run: |
           if [ "$RUNNER_OS" = "Windows" ]; then PY=.venv/Scripts/python.exe; else PY=.venv/bin/python; fi
-          "$PY" src/rag_index.py index data/docs --db .rag/index.sqlite --embedder hash
+          "$PY" src/rag_index.py index tests/fixtures/docs --db .rag/index.sqlite --embedder hash
           "$PY" src/rag_index.py search "срок носки каски" --db .rag/index.sqlite -k 2
 
   e2e:
