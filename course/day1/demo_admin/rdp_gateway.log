@@ -1,0 +1,17 @@
+# Журнал RDP-шлюза rdgw.corp.local (учебный пример, фрагмент за 2026-09-01)
+2026-09-01 08:59:41 INFO  [rdgw] Service started, listening on 0.0.0.0:443
+2026-09-01 09:02:13 INFO  [auth] user=CORP\ivanov src=10.8.0.23 result=OK policy=RAP-Servers
+2026-09-01 09:02:14 INFO  [conn] user=CORP\ivanov target=msk-app20:3389 session=1841 state=established
+2026-09-01 09:17:52 INFO  [conn] user=CORP\ivanov session=1841 state=closed duration=00:15:38 bytes_in=4218331 bytes_out=51882012
+2026-09-01 09:20:04 WARN  [auth] user=CORP\petrov src=10.8.0.41 result=DENIED reason=RAP_no_match target=msk-app21:3389
+2026-09-01 09:20:47 WARN  [auth] user=CORP\petrov src=10.8.0.41 result=DENIED reason=RAP_no_match target=msk-app21:3389
+2026-09-01 09:21:35 WARN  [auth] user=CORP\petrov src=10.8.0.41 result=DENIED reason=RAP_no_match target=msk-app21:3389
+2026-09-01 09:33:10 INFO  [auth] user=CORP\sidorova src=10.8.0.17 result=OK policy=RAP-Servers
+2026-09-01 09:33:11 ERROR [conn] user=CORP\sidorova target=msk-app20:3389 state=failed reason=target_unreachable code=0x00000005
+2026-09-01 09:33:29 ERROR [conn] user=CORP\sidorova target=msk-app20:3389 state=failed reason=target_unreachable code=0x00000005
+2026-09-01 09:35:02 INFO  [health] target=msk-app20:3389 probe=timeout consecutive_failures=4
+2026-09-01 09:35:02 WARN  [health] target=msk-app20 marked as UNAVAILABLE
+2026-09-01 09:41:19 INFO  [health] target=msk-app20:3389 probe=ok consecutive_failures=0
+2026-09-01 09:41:19 INFO  [health] target=msk-app20 marked as AVAILABLE
+2026-09-01 09:42:03 INFO  [auth] user=CORP\sidorova src=10.8.0.17 result=OK policy=RAP-Servers
+2026-09-01 09:42:04 INFO  [conn] user=CORP\sidorova target=msk-app20:3389 session=1849 state=established

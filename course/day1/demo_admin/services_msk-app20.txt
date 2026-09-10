@@ -1,0 +1,15 @@
+# Вывод команды на сервере msk-app20 (учебный пример, снят 2026-09-01 10:12)
+# powershell> Get-Service | Where-Object { $_.Name -match '^(1C|MSSQL|SQLSERVERAGENT|W3SVC|Spooler|WinRM)' } |
+#             Select-Object Status, Name, DisplayName, StartType | Format-Table -AutoSize
+
+Status   Name                DisplayName                                  StartType
+------   ----                -----------                                  ---------
+Running  1C:Enterprise 8.3   Агент сервера 1С:Предприятия 8.3             Automatic
+Running  1C_Server_8319      Сервер 1С:Предприятия 8.3 (кластер 1541)     Automatic
+Stopped  1C_RAS_8319         Сервер администрирования 1С (RAS, 1545)      Manual
+Running  MSSQLSERVER         SQL Server (MSSQLSERVER)                     Automatic
+Stopped  SQLSERVERAGENT      SQL Server Agent (MSSQLSERVER)               Automatic
+Running  MSSQLFDLauncher     SQL Full-text Filter Daemon Launcher         Manual
+Running  W3SVC               World Wide Web Publishing Service            Automatic
+Stopped  Spooler             Print Spooler                                Disabled
+Running  WinRM               Windows Remote Management (WS-Management)    Automatic

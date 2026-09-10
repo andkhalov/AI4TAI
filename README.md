@@ -163,11 +163,20 @@ Slash-команды в сессии: `/plan <задача>`, `/mode <auto|smart
 
 | Папка | Содержимое |
 |---|---|
+| `course/day1/` | Раздатка дня 1: чек-лист подготовки, шпаргалка команд, шаблон `DIARY.md`, готовые `AGENT.md` под профили, выгрузки `demo_admin/` для практики без доступа к рабочим системам |
+| `course/show_request.py` | Разбор реального запроса к модели из логов Goose: системный промпт, схемы инструментов, диалог |
 | `tasks/day1/` | Задачи дня 1 «найди ошибку»: лог WireGuard, скрипт PowerShell, запрос 1С; `EXPECTED.md` |
 | `data/docs/` | Учебные документы для RAG: регламенты, инструкции, FAQ |
 | `templates/` | `AGENT.md`, `DIARY.md`, `CONTEXT.md`, `PROJECT.md` — память проекта |
 | `templates/mcp/` | `s01_hello.py` — шаблон своего MCP-сервера, инструкция подключения |
 | `skills/` | Skills, см. выше |
+
+Разбор запроса к модели после сессии:
+
+```powershell
+.venv\Scripts\python.exe course\show_request.py          # последний запрос
+.venv\Scripts\python.exe course\show_request.py --all    # все запросы файла кратко
+```
 
 ---
 

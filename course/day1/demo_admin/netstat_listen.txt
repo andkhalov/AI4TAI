@@ -1,0 +1,20 @@
+# Открытые порты на msk-app20 (учебный пример, снят 2026-09-01 10:15)
+# powershell> Get-NetTCPConnection -State Listen | Sort-Object LocalPort |
+#             Select-Object LocalAddress, LocalPort, OwningProcess,
+#                 @{n='Process';e={(Get-Process -Id $_.OwningProcess).ProcessName}}
+
+LocalAddress   LocalPort  OwningProcess  Process
+------------   ---------  -------------  -------
+0.0.0.0              135            948  svchost
+0.0.0.0              445              4  System
+0.0.0.0             1433           2104  sqlservr
+127.0.0.1           1434           2104  sqlservr
+0.0.0.0             1540           3312  ragent
+0.0.0.0             1541           3312  rmngr
+0.0.0.0             1560           3480  rphost
+0.0.0.0             1561           3480  rphost
+0.0.0.0             3389            988  svchost
+0.0.0.0             5985            872  svchost
+0.0.0.0             8080           4416  w3wp
+0.0.0.0            47001            872  svchost
+0.0.0.0            49664            632  wininit

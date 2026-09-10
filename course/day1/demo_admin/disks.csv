@@ -1,0 +1,11 @@
+Server,Drive,Label,SizeGB,FreeGB,FreePct,FileSystem
+msk-app20,C:,System,120,18.4,15.3,NTFS
+msk-app20,D:,SQLData,900,142.7,15.9,NTFS
+msk-app20,E:,Backup,2000,96.3,4.8,NTFS
+msk-app21,C:,System,120,44.1,36.8,NTFS
+msk-app21,D:,SQLData,600,238.9,39.8,NTFS
+msk-nas01,C:,System,80,31.2,39.0,NTFS
+msk-nas01,F:,Share,8000,1204.0,15.1,NTFS
+spb-app05,C:,System,120,9.7,8.1,NTFS
+spb-app05,D:,Data,400,180.5,45.1,NTFS
+ekb-ts02,C:,System,150,52.8,35.2,NTFS
